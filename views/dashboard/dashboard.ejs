@@ -1,0 +1,99 @@
+<% include ../partials/header %>
+	<header class="jumbotron bg-light">
+		<h1>Welcome to hiMate</h1>
+		<p>Find your mates from all over the wolrd.</p>
+		<a class="btn btn-outline-dark btn-lg" href="dashboard/new">Add New Mate</a>
+		<p>
+		    <form action="/dashboard" method="GET" class="form-inline">
+		        <div class="form-group">
+		            <input type="text" name="search" placeholder="Search..." class="form-control">
+		            <input type="submit" value="search" class="btn btn-default">
+		        </div>
+		    </form>
+		</p>
+	</header>
+	<div class="row" style="">
+	  <div class="col-lg-1 col-md-1 col-sm-1"></div>
+	<div class="col-lg-10 col-md-10 col-sm-10" id="map" style="height:300px"></div>
+  <div class="col-lg-1 col-md-1 col-sm-1"></div>
+  </div>
+	<br/>
+	<div class="row text-center" style="display:flex; flex-wrap:wrap; margin-bottom: 8%">
+		<% content.forEach(function(x){ %>
+		<div class="col-md-3 col-sm-10">
+			<div class="card" id="dash-card">	
+			  <div class="card-body">
+				<h5 class="card-title"><%= x.title %></h5>
+				<div class="card-text">
+					<p>
+						<a class="btn btn-outline-dark" href="/dashboard/<%= x._id %>">More Info</a>
+					</p>
+					<h6 >
+					  Tags: <% x.hashtags.split(',').forEach(function(x){ %>
+					  <span class="badge badge-dark"><%= x %></span>
+					  <% }) %></span>
+					</h6>
+				</div>
+				</div>
+			</div>
+		</div>
+		<% }) %>
+	</div>
+
+   <script>
+      function initMap() {
+         var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 1,
+          center: {lat: 24.003649, lng: 121.633373}, 
+         });
+
+         // Create an array of alphabetical characters used to label the markers.
+         var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+         // Add some markers to the map.
+         // Note: The code uses the JavaScript Array.prototype.map() method to
+         // create an array of markers based on a given "locations" array.
+         // The map() method here has nothing to do with the Google Maps API.
+         var locations = <%- JSON.stringify(locate_list) %>;
+         console.log('locations', locations);
+         var markers = locations.map(function(location, i) {
+          return new google.maps.Marker({
+            position: location,
+            label: labels[i % labels.length]
+          });
+         });
+
+         // Add a marker clusterer to manage the markers.
+         var markerCluster = new MarkerClusterer(map, markers,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+      }
+      
+      // var locations = [
+      //   {lat: -31.563910, lng: 147.154312},
+      //   {lat: -33.718234, lng: 150.363181},
+      //   {lat: -33.727111, lng: 150.371124},
+      //   {lat: -33.848588, lng: 151.209834},
+      //   {lat: -33.851702, lng: 151.216968},
+      //   {lat: -34.671264, lng: 150.863657},
+      //   {lat: -35.304724, lng: 148.662905},
+      //   {lat: -36.817685, lng: 175.699196},
+      //   {lat: -36.828611, lng: 175.790222},
+      //   {lat: -37.750000, lng: 145.116667},
+      //   {lat: -37.759859, lng: 145.128708},
+      //   {lat: -37.765015, lng: 145.133858},
+      //   {lat: -37.770104, lng: 145.143299},
+      //   {lat: -37.773700, lng: 145.145187},
+      //   {lat: -37.774785, lng: 145.137978},
+      //   {lat: -37.819616, lng: 144.968119},
+      //   {lat: -38.330766, lng: 144.695692},
+      //   {lat: -39.927193, lng: 175.053218},
+      //   {lat: -41.330162, lng: 174.865694},
+      //   {lat: -42.734358, lng: 147.439506},
+      //   {lat: -42.734358, lng: 147.501315},
+      //   {lat: -42.735258, lng: 147.438000},
+      //   {lat: -43.999792, lng: 170.463352}
+      // ]
+    </script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6WuNmyMxlCsDp-bkhkRAmaM1B_3smWkk&callback=initMap"></script>
+<% include ../partials/footer %>

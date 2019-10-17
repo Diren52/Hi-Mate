@@ -1,0 +1,46 @@
+<% include ../partials/header %>
+<h1 class="text-center">Create a new Mate</h1>
+<div class="col-lg-6 col-md-8 col-sm-8" style="margin:20px auto">
+	<form action="/dashboard" method="POST">
+		<div class="form-group">
+			<label for="title">Title</label>
+			<input class="form-control" type="text" name="title" placeholder="Enter Title">
+		</div>
+		<div class="form-group">
+		    <label for="location">Location</label>
+		    <input class="form-control" type="text" name="location" id="location" placeholder="Enter Location">
+		</div>
+		<div class="form-group">
+			<label for="time">Time</label>
+			<input class="form-control" type="text" name="time" placeholder="Enter Time">
+		</div>
+		<div class="form-group">
+			<label for="requirement">Requirements</label>
+			<input class="form-control" type="text" name="requirement" placeholder="Enter Requirements">
+		</div>
+		<div class="form-group">
+			<label for="contact">Contact</label>
+			<input class="form-control" type="text" name="contact" placeholder="Enter Contact">
+		</div>
+		<div class="form-group">
+			<label for="description">Description</label>
+			<textarea class="form-control" type="text" name="text" placeholder="Enter Description"></textarea>
+		</div>
+		<div class="form-group">
+			<label for="hashtags">Hashtags</label>
+			<input class="form-control" type="text" name="hashtags" placeholder="Enter Hashtags">
+		</div>
+	<button class="btn btn-lg btn-primary btn-block">Submit!</button>
+	</form>
+	<br>
+	<a href="/dashboard">Go Back</a>
+</div>
+  <script>
+      function initMap() {
+        var input = document.getElementById('location');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6WuNmyMxlCsDp-bkhkRAmaM1B_3smWkk&libraries=places&callback=initMap"
+        async defer></script>
+<% include ../partials/footer %>
